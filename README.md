@@ -1,30 +1,103 @@
-# Czystydom
+# Czysty Dom 🏠
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3.
+Aplikacja do zarządzania obowiązkami domowymi związanymi ze sprzątaniem.
 
-## Development server
+**🚀 Wdrożona na Vercel + Upstash Redis** - Zobacz [DEPLOYMENT.md](DEPLOYMENT.md) dla instrukcji
 
-To start a local development server, run:
+## Wymagania
 
-```bash
-ng serve
-```
+- Node.js (v18 lub nowszy)
+- npm (v10 lub nowszy)
+- Konto Upstash Redis (darmowe) - dla wersji produkcyjnej
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Instalacja
 
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Konfiguracja
+
+Dla środowiska lokalnego (opcjonalne):
+```bash
+cp .env.example .env
+# Uzupełnij wartości z Upstash Console
+```
+
+## Uruchamianie lokalnie
 
 ```bash
-ng generate --help
+npm run dev
 ```
+
+Aplikacja będzie dostępna na http://localhost:4200
+
+## Deployment
+
+Zobacz szczegółowe instrukcje w [DEPLOYMENT.md](DEPLOYMENT.md)
+
+**Szybki start:**
+```bash
+vercel
+```
+
+## Architektura
+
+### Backend (Serverless Functions)
+- **Vercel Functions** - bezserwerowe API
+- **Upstash Redis** - baza danych w chmurze
+- **Endpoints**:
+  - `GET /api/todos` - pobiera wszystkie obowiązki
+  - `POST /api/todos` - tworzy nowy obowiązek
+  - `PUT /api/todos/:id` - aktualizuje obowiązek
+  - `DELETE /api/todos/:id` - usuwa obowiązek
+  - `PATCH /api/todos/:id/clean` - oznacza obowiązek jako sprzątany
+
+### Frontend
+- **Angular 21** - framework aplikacji
+- **Signals** - reaktywne zarządzanie stanem
+- **HttpClient** - komunikacja z API
+- **FormsModule** - obsługa formularzy
+
+## Funkcjonalności
+
+✅ Dodawanie obowiązków domowych z opisem, pomieszczeniem i interwałem  
+✅ Lista obowiązków z kolorowymi statusami (ile czasu minęło)  
+✅ Oznaczanie obowiązków jako wykonane (zerowanie licznika)  
+✅ Edycja istniejących obowiązków  
+✅ Usuwanie obowiązków  
+✅ Sortowanie według:
+  - Czasu od ostatniego sprzątania
+  - Alfabetycznie
+  - Według pomieszczenia  
+✅ Zapisywanie danych w fizycznym pliku JSON  
+✅ Synchronizacja między różnymi urządzeniami (przez wspólny plik)
+
+## Struktura projektu
+
+```
+czystydom/
+├── server/
+│   ├── server.js           # Serwer Express API
+│   ├── todos.json          # Baza danych (plik JSON)
+│   └── todos.json.example  # Przykładowa struktura danych
+├── src/
+│   └── app/
+│       ├── app.ts           # Główny komponent
+│       ├── app.html         # Template
+│       ├── app.scss         # Style
+│       ├── todo.service.ts  # Serwis HTTP
+│       └── app.config.ts    # Konfiguracja aplikacji
+└── package.json
+```
+
+## Współdzielenie danych między komputerami
+
+Plik `server/todos.json` zawiera wszystkie dane aplikacji. Aby synchronizować dane między komputerami:
+
+1. **Opcja 1: Katalog współdzielony** - umieść cały projekt w chmurze (Dropbox, Google Drive, OneDrive)
+2. **Opcja 2: Git** - commituj i pushuj plik todos.json do repozytorium (usuń go z .gitignore)
+3. **Opcja 3: Serwer sieciowy** - uruchom backend na jednym komputerze w sieci lokalnej i dostosuj URL w `todo.service.ts`
 
 ## Building
 

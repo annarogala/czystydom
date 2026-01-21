@@ -1,6 +1,7 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TodoService } from './todo.service';
 
 export type Room = 'sypialnia' | 'salon' | 'łazienka' | 'kuchnia' | 'balkon' | 'całe mieszkanie';
 export type Interval = '1 tydzień' | '2 tygodnie' | '1 miesiąc' | '3 miesiące' | '6 miesięcy';
@@ -21,7 +22,8 @@ type SortBy = 'alphabet' | 'room' | 'time';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
+export class App implements OnInit {
+  private todoService = inject(TodoService);
   protected readonly title = signal('Czysty Dom');
   
   // Form fields
@@ -67,39 +69,42 @@ export class App {
     }
   });
   
-  constructor() {
-    // Load from localStorage
-    this.loadFromStorage();
+  ngOnInit() {
+    // Load from API
+    this.loadTodos();
   }
   
   addTodo() {
     const description = this.newDescription().trim();
     if (!description) return;
     
-    const newTodo: TodoItem = {
-      id: this.nextId(),
+    const todoData = {
       description,
       room: this.newRoom(),
-      interval: this.newInterval(),
-      lastCleaned: null
+      interval: this.newInterval()
     };
     
-    this.todos.update(todos => [...todos, newTodo]);
-    this.nextId.update(id => id + 1);
-    
-    // Reset form
-    this.newDescription.set('');
-    this.newRoom.set('salon');
-    this.newInterval.set('1 tydzień');
-    
-    this.saveToStorage();
+    this.todoService.createTodo(todoData).subscribe({
+      next: (newTodo) => {
+        this.todos.update(todos => [...todos, newTodo]);
+        // Reset form
+        this.newDescription.set('');
+        this.newRoom.set('salon');
+        this.newInterval.set('1 tydzień');
+      },
+      error: (err) => console.error('Error creating todo:', err)
+    });
   }
   
   markAsCleaned(todo: TodoItem) {
-    this.todos.update(todos =>
-      todos.map(t => t.id === todo.id ? { ...t, lastCleaned: new Date() } : t)
-    );
-    this.saveToStorage();
+    this.todoService.markAsCleaned(todo.id).subscribe({
+      next: (updatedTodo) => {
+        this.todos.update(todos =>
+          todos.map(t => t.id === todo.id ? updatedTodo : t)
+        );
+      },
+      error: (err) => console.error('Error marking as cleaned:', err)
+    });
   }
   
   startEdit(todo: TodoItem) {
@@ -113,16 +118,21 @@ export class App {
     const description = this.editDescription().trim();
     if (!description) return;
     
-    this.todos.update(todos =>
-      todos.map(t => t.id === todo.id ? {
-        ...t,
-        description,
-        room: this.editRoom(),
-        interval: this.editInterval()
-      } : t)
-    );
-    this.editingId.set(null);
-    this.saveToStorage();
+    const updates = {
+      description,
+      room: this.editRoom(),
+      interval: this.editInterval()
+    };
+    
+    this.todoService.updateTodo(todo.id, updates).subscribe({
+      next: (updatedTodo) => {
+        this.todos.update(todos =>
+          todos.map(t => t.id === todo.id ? updatedTodo : t)
+        );
+        this.editingId.set(null);
+      },
+      error: (err) => console.error('Error updating todo:', err)
+    });
   }
   
   cancelEdit() {
@@ -131,8 +141,12 @@ export class App {
   
   deleteTodo(todo: TodoItem) {
     if (confirm(`Czy na pewno chcesz usunąć: ${todo.description}?`)) {
-      this.todos.update(todos => todos.filter(t => t.id !== todo.id));
-      this.saveToStorage();
+      this.todoService.deleteTodo(todo.id).subscribe({
+        next: () => {
+          this.todos.update(todos => todos.filter(t => t.id !== todo.id));
+        },
+        error: (err) => console.error('Error deleting todo:', err)
+      });
     }
   }
   
@@ -197,24 +211,16 @@ export class App {
     this.sortBy.set(sort);
   }
   
-  private saveToStorage() {
-    const data = {
-      todos: this.todos(),
-      nextId: this.nextId()
-    };
-    localStorage.setItem('czystydom-data', JSON.stringify(data));
-  }
-  
-  private loadFromStorage() {
-    const stored = localStorage.getItem('czystydom-data');
-    if (stored) {
-      try {
-        const data = JSON.parse(stored);
+  private loadTodos() {
+    this.todoService.getAllTodos().subscribe({
+      next: (data) => {
         this.todos.set(data.todos || []);
         this.nextId.set(data.nextId || 1);
-      } catch (e) {
-        console.error('Failed to load data from storage', e);
+      },
+      error: (err) => {
+        console.error('Error loading todos:', err);
+        alert('Nie można załadować danych. Upewnij się, że serwer API działa (npm run server).');
       }
-    }
+    });
   }
 }
