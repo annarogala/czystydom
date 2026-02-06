@@ -1,11 +1,5 @@
-// Variables
-$primary-color: #4CAF50;
-$danger-color: #f44336;
-$warning-color: #ff9800;
-$info-color: #2196F3;
-$secondary-color: #757575;
-$border-radius: 8px;
-$box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+@import '../styles/variables.scss';
+@import '../styles/globals.scss';
 
 // Container
 .container {
@@ -87,68 +81,6 @@ header {
   }
 }
 
-// Buttons
-.btn {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: $border-radius;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-weight: 600;
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  &:active {
-    transform: translateY(0);
-  }
-}
-
-.btn-primary {
-  background: $primary-color;
-  color: white;
-  
-  &:hover {
-    background: darken($primary-color, 10%);
-  }
-}
-
-.btn-success {
-  background: $primary-color;
-  color: white;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  
-  &:hover {
-    background: darken($primary-color, 10%);
-  }
-}
-
-.btn-secondary {
-  background: $secondary-color;
-  color: white;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  
-  &:hover {
-    background: darken($secondary-color, 10%);
-  }
-}
-
-.btn-danger {
-  background: $danger-color;
-  color: white;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  
-  &:hover {
-    background: darken($danger-color, 10%);
-  }
-}
-
 .btn-sort {
   background: white;
   color: #333;
@@ -213,153 +145,11 @@ header {
   background: white;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
-  padding: 1.5rem;
+  padding: 1rem;
   transition: all 0.3s;
   
   &:hover {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  }
-}
-
-.todo-view {
-  .todo-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    
-    .todo-title {
-      margin: 0;
-      font-size: 1.3rem;
-      color: #333;
-      flex: 1;
-    }
-    
-    .room-badge {
-      background: $info-color;
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-  }
-  
-  .todo-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-    }
-    
-    .detail-item {
-      display: flex;
-      flex-direction: column;
-      
-      .label {
-        font-weight: 600;
-        color: #777;
-        font-size: 0.85rem;
-        margin-bottom: 0.25rem;
-      }
-      
-      .value {
-        color: #333;
-        font-size: 1rem;
-      }
-    }
-  }
-  
-  .status-bar {
-    margin-bottom: 1rem;
-    
-    .status-label {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      
-      &.status-good {
-        background: #4CAF50;
-        color: white;
-      }
-      
-      &.status-warning {
-        background: #FFC107;
-        color: #333;
-      }
-      
-      &.status-urgent {
-        background: #FF9800;
-        color: white;
-      }
-      
-      &.status-overdue {
-        background: #f44336;
-        color: white;
-      }
-      
-      &.status-never {
-        background: #9E9E9E;
-        color: white;
-      }
-    }
-  }
-  
-  .todo-actions {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-}
-
-// Edit Mode
-.todo-edit {
-  .form-group {
-    margin-bottom: 1rem;
-    
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #555;
-    }
-    
-    input, select {
-      width: 100%;
-      padding: 0.75rem;
-      border: 2px solid #ddd;
-      border-radius: $border-radius;
-      font-size: 1rem;
-      box-sizing: border-box;
-      
-      &:focus {
-        outline: none;
-        border-color: $primary-color;
-      }
-    }
-  }
-  
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  .edit-actions {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
   }
 }
 
@@ -381,14 +171,6 @@ header {
     flex-direction: column;
     
     .btn-sort {
-      width: 100%;
-    }
-  }
-  
-  .todo-actions {
-    flex-direction: column;
-    
-    .btn {
       width: 100%;
     }
   }

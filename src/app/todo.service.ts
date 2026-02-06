@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TodoItem } from './app';
+import { TodoItem } from './types.js';
 
 export interface TodoData {
   todos: TodoItem[];
