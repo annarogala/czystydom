@@ -6,10 +6,7 @@ import path from 'path';
 const isProduction = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN;
 
 // Initialize Redis only in production
-const redis = isProduction ? new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
-}) : null;
+const redis = isProduction ? Redis.fromEnv() : null;
 
 const TODOS_KEY = 'czystydom:todos';
 const NEXT_ID_KEY = 'czystydom:nextId';
