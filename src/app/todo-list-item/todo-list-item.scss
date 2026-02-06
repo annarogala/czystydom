@@ -1,0 +1,165 @@
+@import '../../styles/variables.scss';
+@import '../../styles/globals.scss';
+
+.todo-view {
+  .todo-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    
+    .todo-title {
+      margin: 0;
+      font-size: 1.3rem;
+      color: #333;
+      flex: 1;
+    }
+  }
+  
+  .todo-details {
+    display: flex;
+    gap: 1.5rem;
+    // margin-bottom: 1rem;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+    
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+
+      .room-badge {
+        display: inline-block;
+        background: $info-color;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-align: center;
+        width: 120px;
+      }
+      
+      .label {
+        font-weight: 600;
+        color: #777;
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+      }
+      
+      .value {
+        color: #333;
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .status-bar {
+    // margin-bottom: 1rem;
+    width: 160px;
+    
+    .status-label {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+      width: 100px;
+      
+      &.status-good {
+        background: #4CAF50;
+        color: white;
+      }
+      
+      &.status-warning {
+        // background: #FFC107;
+        background: #FF9800;
+        color: #333;
+      }
+      
+      &.status-urgent {
+        background: #f44336;
+        color: white;
+      }
+      
+      // &.status-overdue {
+      //   background: #f44336;
+      //   color: white;
+      // }
+      
+      &.status-never {
+        background: #9E9E9E;
+        color: white;
+      }
+    }
+  }
+  
+  .todo-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+}
+
+// Edit Mode
+.todo-edit {
+  .form-group {
+    margin-bottom: 1rem;
+    
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #555;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #ddd;
+      border-radius: $border-radius;
+      font-size: 1rem;
+      box-sizing: border-box;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .edit-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+
+    .edit-actions-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .todo-actions {
+    flex-direction: column;
+    
+    .btn {
+      width: 100%;
+    }
+  }
+}

@@ -59,78 +59,8 @@
     </div>
 
     <div class="todo-items">
-      <div *ngFor="let todo of sortedTodos()" class="todo-item">
-        <!-- View mode -->
-        <div *ngIf="editingId() !== todo.id" class="todo-view">
-          <div class="todo-header">
-            <h3 class="todo-title">{{ todo.description }}</h3>
-            <span class="room-badge">{{ todo.room }}</span>
-          </div>
-
-          <div class="todo-details">
-            <div class="detail-item">
-              <span class="label">Interwał:</span>
-              <span class="value">{{ todo.interval }}</span>
-            </div>
-            <div class="detail-item">
-              <span class="label">Ostatnie sprzątanie:</span>
-              <span class="value">{{ formatDate(todo.lastCleaned) }}</span>
-            </div>
-          </div>
-
-          <div class="status-bar">
-            <span [class]="'status-label ' + getStatusClass(todo)">
-              {{ getStatusText(todo) }}
-            </span>
-          </div>
-
-          <div class="todo-actions">
-            <button (click)="markAsCleaned(todo)" class="btn btn-success" title="Oznacz jako sprzątane">
-              ✓ Sprzątane
-            </button>
-            <button (click)="startEdit(todo)" class="btn btn-secondary" title="Edytuj">
-              ✏️ Edytuj
-            </button>
-            <button (click)="deleteTodo(todo)" class="btn btn-danger" title="Usuń">
-              🗑️ Usuń
-            </button>
-          </div>
-        </div>
-
-        <!-- Edit mode -->
-        <div *ngIf="editingId() === todo.id" class="todo-edit">
-          <div class="form-group">
-            <label>Opis obowiązku:</label>
-            <input type="text" [ngModel]="editDescription()" (ngModelChange)="editDescription.set($event)"
-              class="edit-input" />
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Pomieszczenie:</label>
-              <select [ngModel]="editRoom()" (ngModelChange)="editRoom.set($event)">
-                <option *ngFor="let room of rooms" [value]="room">{{ room }}</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Interwał:</label>
-              <select [ngModel]="editInterval()" (ngModelChange)="editInterval.set($event)">
-                <option *ngFor="let interval of intervals" [value]="interval">{{ interval }}</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="edit-actions">
-            <button (click)="saveEdit(todo)" class="btn btn-success">
-              ✓ Zapisz
-            </button>
-            <button (click)="cancelEdit()" class="btn btn-secondary">
-              ✕ Anuluj
-            </button>
-          </div>
-        </div>
-      </div>
+      <TodoListItem class="todo-item" *ngFor="let todo of sortedTodos()" [todo]="todo"
+        (todoUpdated)="onTodoUpdated($event)" (todoDeleted)="onTodoDeleted($event)" />
     </div>
   </section>
 </div>
