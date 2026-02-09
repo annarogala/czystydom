@@ -53,9 +53,9 @@ async function setTodos(todos) {
 
 export default async function handler(req, res) {
   // Enable CORS
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Methods', 'PATCH, OPTIONS');
   res.setHeader(
     'Access-Control-Allow-Headers',
     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
@@ -75,7 +75,7 @@ export default async function handler(req, res) {
   }
 
   if (req.method !== 'PATCH') {
-    res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: `Method ${req.method} not allowed. Only PATCH is supported.` });
     return;
   }
 
