@@ -69,16 +69,16 @@ export class TodoListItem {
     });
   }
 
-  // deleteTodo(todo: TodoItem) {
-  //   if (confirm(`Czy na pewno chcesz usunąć: ${todo.description}?`)) {
-  //     this.todoService.deleteTodo(todo.id).subscribe({
-  //       next: () => {
-  //         this.todos.update(todos => todos.filter(t => t.id !== todo.id));
-  //       },
-  //       error: (err) => console.error('Error deleting todo:', err)
-  //     });
-  //   }
-  // }
+  deleteTodo(todo: TodoItem) {
+    if (confirm(`Czy na pewno chcesz usunąć: ${todo.description}?`)) {
+      this.todoService.deleteTodo(todo.id).subscribe({
+        next: () => {
+          this.todoDeleted.emit(todo.id);
+        },
+        error: (err) => console.error('Error deleting todo:', err)
+      });
+    }
+  }
 
 
 formatDate(date: Date | null): string {
