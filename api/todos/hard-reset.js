@@ -1,8 +1,5 @@
-import fs from 'fs/promises';
-import path from 'path';
 import { setData } from '../lib/db.js';
-
-const EXAMPLE_FILE = path.join(process.cwd(), 'server', 'todos.json.example');
+import defaultTodoData from '../../shared/default-todos.cjs';
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -25,8 +22,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const exampleContent = await fs.readFile(EXAMPLE_FILE, 'utf-8');
-    const exampleData = JSON.parse(exampleContent);
+    const exampleData = JSON.parse(JSON.stringify(defaultTodoData));
 
     await setData(exampleData);
     res.status(200).json(exampleData);

@@ -2,11 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs').promises;
 const path = require('path');
+const defaultTodoData = require('../shared/default-todos.cjs');
 
 const app = express();
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, 'todos.json');
-const EXAMPLE_DATA_FILE = path.join(__dirname, 'todos.json.example');
 
 // Middleware
 app.use(cors());
@@ -143,10 +143,9 @@ app.patch('/api/todos/:id/clean', async (req, res) => {
 // POST hard reset todos from example file
 app.post('/api/todos/hard-reset', async (req, res) => {
   try {
-    const exampleContent = await fs.readFile(EXAMPLE_DATA_FILE, 'utf-8');
-    const exampleData = JSON.parse(exampleContent);
+    const exampleData = JSON.parse(JSON.stringify(defaultTodoData));
 
-    await fs.writeFile(DATA_FILE, exampleContent);
+    await fs.writeFile(DATA_FILE, JSON.stringify(exampleData, null, 2));
     res.status(200).json(exampleData);
   } catch (error) {
     console.error('Error hard resetting todos:', error);
