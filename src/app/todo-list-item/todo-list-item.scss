@@ -40,6 +40,38 @@
         font-weight: 600;
         text-align: center;
         width: 120px;
+
+        &.location-1 {
+          background: #fca31f;
+        }
+
+        &.location-2 {
+          background: #2e7d32;
+        }
+
+        &.location-3 {
+          background: #6a1b9a;
+        }
+
+        &.location-4 {
+          background: $info-color;
+        }
+
+        &.location-5 {
+          background: #ef6c00;
+        }
+
+        &.location-6 {
+          background: #00838f;
+        }
+
+        &.location-7 {
+          background: #455a64;
+        }
+
+        &.location-0 {
+          background: #333;
+        }
       }
 
       .label {

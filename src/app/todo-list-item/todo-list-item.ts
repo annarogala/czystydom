@@ -14,6 +14,16 @@ import { CommonModule } from '@angular/common';
 export class TodoListItem {
   todo!: TodoItem;
 
+  private readonly locationToBadgeNumber: Record<Location, number> = {
+    Kuchnia: 1,
+    Sypialnia: 2,
+    Salon: 3,
+    Łazienka: 4,
+    Balkon: 5,
+    Przedpokój: 6,
+    'Całe mieszkanie': 7,
+  };
+
   // Outputs to notify parent component
   todoUpdated = output<TodoItem>();
   todoDeleted = output<number>();
@@ -23,17 +33,18 @@ export class TodoListItem {
   // Edit mode
   editingId = signal<number | null>(null);
   editDescription = signal('');
-  editLocation = signal<Location>('salon');
+  editLocation = signal<Location>('Salon');
   editInterval = signal<Interval>('1 tydzień');
 
   // Available options
   locations: Location[] = [
-    'sypialnia',
-    'salon',
-    'łazienka',
-    'kuchnia',
-    'balkon',
-    'całe mieszkanie',
+    'Sypialnia',
+    'Salon',
+    'Łazienka',
+    'Kuchnia',
+    'Balkon',
+    'Przedpokój',
+    'Całe mieszkanie',
   ];
   intervals: Interval[] = ['1 tydzień', '2 tygodnie', '1 miesiąc', '3 miesiące', '6 miesięcy'];
 
@@ -176,5 +187,10 @@ export class TodoListItem {
     if (daysSince === Infinity) return 'Nie sprzątane';
 
     return `${daysSince} ${this.getDaysLabel(daysSince)} temu`;
+  }
+
+  getLocationBadgeClass(location: Location): string {
+    const badgeNumber = this.locationToBadgeNumber[location] ?? 0;
+    return `location-${badgeNumber}`;
   }
 }

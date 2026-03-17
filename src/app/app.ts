@@ -20,13 +20,13 @@ export class App implements OnInit {
 
   // Form fields
   newDescription = signal('');
-  newLocation = signal<Location>('salon');
+  newLocation = signal<Location>('Salon');
   newInterval = signal<Interval>('1 tydzień');
 
   // Edit mode
   editingId = signal<number | null>(null);
   editDescription = signal('');
-  editLocation = signal<Location>('salon');
+  editLocation = signal<Location>('Salon');
   editInterval = signal<Interval>('1 tydzień');
 
   // Data
@@ -38,12 +38,13 @@ export class App implements OnInit {
 
   // // Available options
   locations: Location[] = [
-    'sypialnia',
-    'salon',
-    'łazienka',
-    'kuchnia',
-    'balkon',
-    'całe mieszkanie',
+    'Sypialnia',
+    'Salon',
+    'Łazienka',
+    'Kuchnia',
+    'Balkon',
+    'Przedpokój',
+    'Całe mieszkanie',
   ];
   intervals: Interval[] = ['1 tydzień', '2 tygodnie', '1 miesiąc', '3 miesiące', '6 miesięcy'];
 
@@ -88,7 +89,7 @@ export class App implements OnInit {
         this.todos.update((todos) => [...todos, newTodo]);
         // Reset form
         this.newDescription.set('');
-        this.newLocation.set('salon');
+        this.newLocation.set('Salon');
         this.newInterval.set('1 tydzień');
       },
       error: (err) => console.error('Error creating todo:', err),
