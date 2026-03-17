@@ -10,21 +10,38 @@
     <form (ngSubmit)="addTodo()" class="form">
       <div class="form-group">
         <label for="description">Opis obowiązku:</label>
-        <input type="text" id="description" [ngModel]="newDescription()" (ngModelChange)="newDescription.set($event)"
-          name="description" placeholder="np. Umyć podłogę" required />
+        <input
+          type="text"
+          id="description"
+          [ngModel]="newDescription()"
+          (ngModelChange)="newDescription.set($event)"
+          name="description"
+          placeholder="np. Umyć podłogę"
+          required
+        />
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label for="room">Pomieszczenie:</label>
-          <select id="room" [ngModel]="newRoom()" (ngModelChange)="newRoom.set($event)" name="room">
-            <option *ngFor="let room of rooms" [value]="room">{{ room }}</option>
+          <label for="location">Pomieszczenie:</label>
+          <select
+            id="location"
+            [ngModel]="newLocation()"
+            (ngModelChange)="newLocation.set($event)"
+            name="location"
+          >
+            <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
           </select>
         </div>
 
         <div class="form-group">
           <label for="interval">Interwał:</label>
-          <select id="interval" [ngModel]="newInterval()" (ngModelChange)="newInterval.set($event)" name="interval">
+          <select
+            id="interval"
+            [ngModel]="newInterval()"
+            (ngModelChange)="newInterval.set($event)"
+            name="interval"
+          >
             <option *ngFor="let interval of intervals" [value]="interval">{{ interval }}</option>
           </select>
         </div>
@@ -41,10 +58,18 @@
       <button [class.active]="sortBy() === 'time'" (click)="setSortBy('time')" class="btn btn-sort">
         ⏱️ Czasu od sprzątania
       </button>
-      <button [class.active]="sortBy() === 'alphabet'" (click)="setSortBy('alphabet')" class="btn btn-sort">
+      <button
+        [class.active]="sortBy() === 'alphabet'"
+        (click)="setSortBy('alphabet')"
+        class="btn btn-sort"
+      >
         🔤 Alfabetycznie
       </button>
-      <button [class.active]="sortBy() === 'room'" (click)="setSortBy('room')" class="btn btn-sort">
+      <button
+        [class.active]="sortBy() === 'location'"
+        (click)="setSortBy('location')"
+        class="btn btn-sort"
+      >
         🏠 Pomieszczenia
       </button>
     </div>
@@ -59,8 +84,15 @@
     </div>
 
     <div class="todo-items">
-      <TodoListItem class="todo-item" *ngFor="let todo of sortedTodos()" [todo]="todo"
-        (todoUpdated)="onTodoUpdated($event)" (todoDeleted)="onTodoDeleted($event)" />
+      <TodoListItem
+        class="todo-item"
+        *ngFor="let todo of sortedTodos()"
+        [todo]="todo"
+        (todoUpdated)="onTodoUpdated($event)"
+        (todoDeleted)="onTodoDeleted($event)"
+      />
     </div>
   </section>
+
+  <button class="hard-reset-btn" type="button" (click)="hardResetTodos()">hard reset</button>
 </div>

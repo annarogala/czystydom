@@ -9,14 +9,19 @@
     <!-- <button (click)="todoDeleted.emit(todo.id)" class="btn btn-danger" title="Usuń" type="button">
       🗑️
     </button> -->
-    <button (click)="markAsCleaned(todo)" class="btn btn-success" title="Oznacz jako sprzątane" type="button">
+    <button
+      (click)="markAsCleaned(todo)"
+      class="btn btn-success"
+      title="Oznacz jako sprzątane"
+      type="button"
+    >
       ✓ Sprzątane
     </button>
   </div>
 
   <div class="todo-details">
     <div class="detail-item">
-      <span class="room-badge">{{ todo.room }}</span>
+      <span class="location-badge">{{ todo.location }}</span>
     </div>
     <div class="detail-item">
       <span class="label">Interwał:</span>
@@ -33,21 +38,25 @@
         </span>
       </div>
     </div>
-
   </div>
 </div>
 <!-- Edit mode -->
 <div *ngIf="editingId() === todo.id" class="todo-edit">
   <div class="form-group">
     <label>Opis obowiązku:</label>
-    <input type="text" [ngModel]="editDescription()" (ngModelChange)="editDescription.set($event)" class="edit-input" />
+    <input
+      type="text"
+      [ngModel]="editDescription()"
+      (ngModelChange)="editDescription.set($event)"
+      class="edit-input"
+    />
   </div>
 
   <div class="form-row">
     <div class="form-group">
       <label>Pomieszczenie:</label>
-      <select [ngModel]="editRoom()" (ngModelChange)="editRoom.set($event)">
-        <option *ngFor="let room of rooms" [value]="room">{{ room }}</option>
+      <select [ngModel]="editLocation()" (ngModelChange)="editLocation.set($event)">
+        <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
       </select>
     </div>
 
@@ -61,15 +70,9 @@
 
   <div class="edit-actions">
     <div class="edit-actions-buttons">
-      <button (click)="saveEdit(todo)" class="btn btn-success" type="button">
-        ✓ Zapisz
-      </button>
-      <button (click)="cancelEdit()" class="btn btn-secondary" type="button">
-        ✕ Anuluj
-      </button>
+      <button (click)="saveEdit(todo)" class="btn btn-success" type="button">✓ Zapisz</button>
+      <button (click)="cancelEdit()" class="btn btn-secondary" type="button">✕ Anuluj</button>
     </div>
-    <button (click)="deleteTodo(todo)" class="btn btn-danger" title="Usuń" type="button">
-      🗑️
-    </button>
+    <button (click)="deleteTodo(todo)" class="btn btn-danger" title="Usuń" type="button">🗑️</button>
   </div>
 </div>

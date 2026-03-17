@@ -6,6 +6,7 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, 'todos.json');
+const EXAMPLE_DATA_FILE = path.join(__dirname, 'todos.json.example');
 
 // Middleware
 app.use(cors());
@@ -18,7 +19,7 @@ async function initializeDataFile() {
   } catch {
     const initialData = {
       todos: [],
-      nextId: 1
+      nextId: 1,
     };
     await fs.writeFile(DATA_FILE, JSON.stringify(initialData, null, 2));
     console.log('Created initial data file');
@@ -63,12 +64,12 @@ app.post('/api/todos', async (req, res) => {
     const newTodo = {
       id: data.nextId,
       ...req.body,
-      lastCleaned: null
+      lastCleaned: null,
     };
-    
+
     data.todos.push(newTodo);
     data.nextId += 1;
-    
+
     await writeData(data);
     res.status(201).json(newTodo);
   } catch (error) {
@@ -81,17 +82,17 @@ app.put('/api/todos/:id', async (req, res) => {
   try {
     const data = await readData();
     const todoId = parseInt(req.params.id);
-    const todoIndex = data.todos.findIndex(t => t.id === todoId);
-    
+    const todoIndex = data.todos.findIndex((t) => t.id === todoId);
+
     if (todoIndex === -1) {
       return res.status(404).json({ error: 'Todo not found' });
     }
-    
+
     data.todos[todoIndex] = {
       ...data.todos[todoIndex],
-      ...req.body
+      ...req.body,
     };
-    
+
     await writeData(data);
     res.json(data.todos[todoIndex]);
   } catch (error) {
@@ -105,13 +106,13 @@ app.delete('/api/todos/:id', async (req, res) => {
     const data = await readData();
     const todoId = parseInt(req.params.id);
     const initialLength = data.todos.length;
-    
-    data.todos = data.todos.filter(t => t.id !== todoId);
-    
+
+    data.todos = data.todos.filter((t) => t.id !== todoId);
+
     if (data.todos.length === initialLength) {
       return res.status(404).json({ error: 'Todo not found' });
     }
-    
+
     await writeData(data);
     res.status(204).send();
   } catch (error) {
@@ -124,18 +125,32 @@ app.patch('/api/todos/:id/clean', async (req, res) => {
   try {
     const data = await readData();
     const todoId = parseInt(req.params.id);
-    const todoIndex = data.todos.findIndex(t => t.id === todoId);
-    
+    const todoIndex = data.todos.findIndex((t) => t.id === todoId);
+
     if (todoIndex === -1) {
       return res.status(404).json({ error: 'Todo not found' });
     }
-    
+
     data.todos[todoIndex].lastCleaned = new Date().toISOString();
-    
+
     await writeData(data);
     res.json(data.todos[todoIndex]);
   } catch (error) {
     res.status(500).json({ error: 'Failed to mark as cleaned' });
+  }
+});
+
+// POST hard reset todos from example file
+app.post('/api/todos/hard-reset', async (req, res) => {
+  try {
+    const exampleContent = await fs.readFile(EXAMPLE_DATA_FILE, 'utf-8');
+    const exampleData = JSON.parse(exampleContent);
+
+    await fs.writeFile(DATA_FILE, exampleContent);
+    res.status(200).json(exampleData);
+  } catch (error) {
+    console.error('Error hard resetting todos:', error);
+    res.status(500).json({ error: 'Failed to hard reset todos' });
   }
 });
 

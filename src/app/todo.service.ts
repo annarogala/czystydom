@@ -9,15 +9,16 @@ export interface TodoData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoService {
   private http = inject(HttpClient);
   // Lokalnie: http://localhost:3000/api/todos
   // Na Vercel: /api/todos (rewrites w vercel.json)
-  private apiUrl = typeof window !== 'undefined' && window.location.hostname === 'localhost'
-    ? 'http://localhost:3000/api/todos'
-    : '/api/todos';
+  private apiUrl =
+    typeof window !== 'undefined' && window.location.hostname === 'localhost'
+      ? 'http://localhost:3000/api/todos'
+      : '/api/todos';
 
   getAllTodos(): Observable<TodoData> {
     return this.http.get<TodoData>(this.apiUrl);
@@ -37,5 +38,9 @@ export class TodoService {
 
   markAsCleaned(id: number): Observable<TodoItem> {
     return this.http.patch<TodoItem>(`${this.apiUrl}/${id}/clean`, {});
+  }
+
+  hardReset(): Observable<TodoData> {
+    return this.http.post<TodoData>(`${this.apiUrl}/hard-reset`, {});
   }
 }

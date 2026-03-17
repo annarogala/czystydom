@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TodoService } from './todo.service';
 import { TodoListItem } from './todo-list-item/todo-list-item';
-import { Room, Interval, TodoItem } from './types.js';
+import { Location, Interval, TodoItem } from './types.js';
 
-type SortBy = 'alphabet' | 'room' | 'time';
+type SortBy = 'alphabet' | 'location' | 'time';
 
 @Component({
   selector: 'app-root',
@@ -17,39 +17,46 @@ type SortBy = 'alphabet' | 'room' | 'time';
 export class App implements OnInit {
   private todoService = inject(TodoService);
   protected readonly title = signal('Czysty Dom');
-  
+
   // Form fields
   newDescription = signal('');
-  newRoom = signal<Room>('salon');
+  newLocation = signal<Location>('salon');
   newInterval = signal<Interval>('1 tydzień');
-  
+
   // Edit mode
   editingId = signal<number | null>(null);
   editDescription = signal('');
-  editRoom = signal<Room>('salon');
+  editLocation = signal<Location>('salon');
   editInterval = signal<Interval>('1 tydzień');
-  
+
   // Data
   todos = signal<TodoItem[]>([]);
   nextId = signal(1);
-  
+
   // Sorting
   sortBy = signal<SortBy>('time');
-  
+
   // // Available options
-  rooms: Room[] = ['sypialnia', 'salon', 'łazienka', 'kuchnia', 'balkon', 'całe mieszkanie'];
+  locations: Location[] = [
+    'sypialnia',
+    'salon',
+    'łazienka',
+    'kuchnia',
+    'balkon',
+    'całe mieszkanie',
+  ];
   intervals: Interval[] = ['1 tydzień', '2 tygodnie', '1 miesiąc', '3 miesiące', '6 miesięcy'];
-  
+
   // Sorted todos
   sortedTodos = computed(() => {
     const items = [...this.todos()];
     const sortType = this.sortBy();
-    
+
     switch (sortType) {
       case 'alphabet':
         return items.sort((a, b) => a.description.localeCompare(b.description));
-      case 'room':
-        return items.sort((a, b) => a.room.localeCompare(b.room));
+      case 'location':
+        return items.sort((a, b) => a.location.localeCompare(b.location));
       case 'time':
         return items.sort((a, b) => {
           const daysA = this.getDaysSinceLastCleaned(a);
@@ -60,37 +67,37 @@ export class App implements OnInit {
         return items;
     }
   });
-  
+
   ngOnInit() {
     // Load from API
     this.loadTodos();
   }
-  
+
   addTodo() {
     const description = this.newDescription().trim();
     if (!description) return;
-    
+
     const todoData = {
       description,
-      room: this.newRoom(),
-      interval: this.newInterval()
+      location: this.newLocation(),
+      interval: this.newInterval(),
     };
-    
+
     this.todoService.createTodo(todoData).subscribe({
       next: (newTodo) => {
-        this.todos.update(todos => [...todos, newTodo]);
+        this.todos.update((todos) => [...todos, newTodo]);
         // Reset form
         this.newDescription.set('');
-        this.newRoom.set('salon');
+        this.newLocation.set('salon');
         this.newInterval.set('1 tydzień');
       },
-      error: (err) => console.error('Error creating todo:', err)
+      error: (err) => console.error('Error creating todo:', err),
     });
   }
 
   getDaysSinceLastCleaned(todo: TodoItem): number {
     if (!todo.lastCleaned) return Infinity;
-    
+
     const now = new Date();
     const lastCleaned = new Date(todo.lastCleaned);
     const diffTime = Math.abs(now.getTime() - lastCleaned.getTime());
@@ -100,19 +107,35 @@ export class App implements OnInit {
 
   // Metody w komponencie rodzica:
   onTodoUpdated(updatedTodo: TodoItem) {
-    this.todos.update(todos => 
-      todos.map(t => t.id === updatedTodo.id ? updatedTodo : t)
-    );
+    this.todos.update((todos) => todos.map((t) => (t.id === updatedTodo.id ? updatedTodo : t)));
   }
 
   onTodoDeleted(todoId: number) {
-    this.todos.update(todos => todos.filter(t => t.id !== todoId));
+    this.todos.update((todos) => todos.filter((t) => t.id !== todoId));
   }
-  
+
   setSortBy(sort: SortBy) {
     this.sortBy.set(sort);
   }
-  
+
+  hardResetTodos() {
+    const confirmed = confirm(
+      'To zastąpi zawartość todos.json danymi z todos.json.example. Kontynuować?',
+    );
+    if (!confirmed) return;
+
+    this.todoService.hardReset().subscribe({
+      next: (data) => {
+        this.todos.set(data.todos || []);
+        this.nextId.set(data.nextId || 1);
+      },
+      error: (err) => {
+        console.error('Error hard resetting todos:', err);
+        alert('Nie udało się wykonać hard reset.');
+      },
+    });
+  }
+
   private loadTodos() {
     this.todoService.getAllTodos().subscribe({
       next: (data) => {
@@ -122,7 +145,7 @@ export class App implements OnInit {
       error: (err) => {
         console.error('Error loading todos:', err);
         alert('Nie można załadować danych. Upewnij się, że serwer API działa (npm run server).');
-      }
+      },
     });
   }
 }

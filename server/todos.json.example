@@ -2,18 +2,484 @@
   "todos": [
     {
       "id": 1,
-      "description": "Umyć podłogę",
-      "room": "salon",
-      "interval": "1 tydzień",
-      "lastCleaned": "2026-01-15T10:30:00.000Z"
+      "description": "Odkurzanie zakamarków ręczne",
+      "location": "Całe mieszkanie",
+      "interval": "2 tygodnie",
+      "rank": 2,
+      "lastCleaned": null
     },
     {
       "id": 2,
-      "description": "Odkurzyć meble",
-      "room": "sypialnia",
+      "description": "Zmywanie podłóg",
+      "location": "Całe mieszkanie",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 3,
+      "description": "Kurz z listew przypodłogowych",
+      "location": "Całe mieszkanie",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 4,
+      "description": "Gniazdka i włączniki świateł z kurzu",
+      "location": "Całe mieszkanie",
       "interval": "2 tygodnie",
+      "rank": 2,
+      "lastCleaned": null
+    },
+    {
+      "id": 5,
+      "description": "Okna umyć",
+      "location": "Całe mieszkanie",
+      "interval": "6 miesięcy",
+      "rank": 6,
+      "lastCleaned": null
+    },
+    {
+      "id": 6,
+      "description": "Framugi i wszystkie elementy wokół okna przemyć",
+      "location": "Całe mieszkanie",
+      "interval": "2 miesiące",
+      "rank": 4,
+      "lastCleaned": null
+    },
+    {
+      "id": 7,
+      "description": "Wszystkie klamki i drzwi umyć i framugi",
+      "location": "Całe mieszkanie",
+      "interval": "2 miesiące",
+      "rank": 4,
+      "lastCleaned": null
+    },
+    {
+      "id": 8,
+      "description": "wywietrzniki wyczyścić",
+      "location": "Całe mieszkanie",
+      "interval": "2 miesiące",
+      "rank": 4,
+      "lastCleaned": null
+    },
+    {
+      "id": 9,
+      "description": "Lampy z kurzu",
+      "location": "Całe mieszkanie",
+      "interval": "3 miesiące",
+      "rank": 5,
+      "lastCleaned": null
+    },
+    {
+      "id": 10,
+      "description": "Kaloryfery z kurzu",
+      "location": "Całe mieszkanie",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 11,
+      "description": "Mycie plis",
+      "location": "Całe mieszkanie",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 12,
+      "description": "Odkurzanie biurka",
+      "location": "Sypialnia",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 13,
+      "description": "Zmiana pościeli",
+      "location": "Sypialnia",
+      "interval": "2 tygodnie",
+      "rank": 2,
+      "lastCleaned": null
+    },
+    {
+      "id": 14,
+      "description": "Pranie pościeli",
+      "location": "Sypialnia",
+      "interval": "2 tygodnie",
+      "rank": 2,
+      "lastCleaned": null
+    },
+    {
+      "id": 15,
+      "description": "Ścieranie kurzy że stolików nocnych, parapetu",
+      "location": "Sypialnia",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 16,
+      "description": "Sprzątanie pojemnika w łóżku",
+      "location": "Sypialnia",
+      "interval": "3 miesiące",
+      "rank": 5,
+      "lastCleaned": null
+    },
+    {
+      "id": 17,
+      "description": "Czyszczenie materiału łózka",
+      "location": "Sypialnia",
+      "interval": "3 miesiące",
+      "rank": 5,
+      "lastCleaned": null
+    },
+    {
+      "id": 18,
+      "description": "Kurz z szaf ubraniowych z góry",
+      "location": "Sypialnia",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 19,
+      "description": "Czyszczenie łóżka psa",
+      "location": "Salon",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 20,
+      "description": "Czyszczenie kanapy z kłaków",
+      "location": "Salon",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 21,
+      "description": "Skrzynia w kanapie",
+      "location": "Salon",
+      "interval": "1 miesiąc",
+      "rank": 5,
+      "lastCleaned": null
+    },
+    {
+      "id": 22,
+      "description": "Kanapę jakoś się inaczej jeszcze czyści?",
+      "location": "Salon",
+      "interval": "2 miesiące",
+      "rank": 4,
+      "lastCleaned": null
+    },
+    {
+      "id": 23,
+      "description": "Przeprać pokorwce na jaski",
+      "location": "Salon",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 24,
+      "description": "Przeprać obrus",
+      "location": "Salon",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 25,
+      "description": "Stolik przetrzeć z kurzu, szafkę z projektorem, projektor, konsolę",
+      "location": "Salon",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 26,
+      "description": "Komoda szafki w środku",
+      "location": "Salon",
+      "interval": "6 miesięcy",
+      "rank": 6,
+      "lastCleaned": null
+    },
+    {
+      "id": 27,
+      "description": "Sprzątanie szafek w słupku",
+      "location": "Salon",
+      "interval": "6 miesięcy",
+      "rank": 6,
+      "lastCleaned": null
+    },
+    {
+      "id": 28,
+      "description": "Mycie frontów ze słupka i barku",
+      "location": "Salon",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 29,
+      "description": "Czyszczenie dywanika z kłaków",
+      "location": "Przedpokój",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 30,
+      "description": "Lustro na szafie",
+      "location": "Przedpokój",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 31,
+      "description": "Fronty szafy",
+      "location": "Przedpokój",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 32,
+      "description": "Drzi wejściowe z zewnątrz i wewnątrz umyć (klamka, framuga)",
+      "location": "Przedpokój",
+      "interval": "2 miesiące",
+      "rank": 4,
+      "lastCleaned": null
+    },
+    {
+      "id": 33,
+      "description": "Wycieraczkę zewnętrzną wyczyścić",
+      "location": "Przedpokój",
+      "interval": "2 miesiące",
+      "rank": 4,
+      "lastCleaned": null
+    },
+    {
+      "id": 34,
+      "description": "Czyszczenie WC",
+      "location": "Łazienka",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 35,
+      "description": "Deska sedesowa - pokrywa (ten zaciek)",
+      "location": "Łazienka",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 36,
+      "description": "Czyszczenie kabiny i bakterii",
+      "location": "Łazienka",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 37,
+      "description": "Czyszczenie wanny",
+      "location": "Łazienka",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 38,
+      "description": "Czyszczenie umywalnki, baterii ",
+      "location": "Łazienka",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 39,
+      "description": "Umycie lustra",
+      "location": "Łazienka",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 40,
+      "description": "Kurze z lustra i lampki i suszarki",
+      "location": "Łazienka",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 41,
+      "description": "Ślady wody i pasty do zębów z boku suszarki i pralki",
+      "location": "Łazienka",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 42,
+      "description": "Korek w umywalce z kamienia",
+      "location": "Łazienka",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 43,
+      "description": "Kafelki w prysznicu i fugi",
+      "location": "Łazienka",
+      "interval": "2 tygodnie",
+      "rank": 2,
+      "lastCleaned": null
+    },
+    {
+      "id": 44,
+      "description": "Wszystkie kafle i fugi",
+      "location": "Łazienka",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 45,
+      "description": "szuflady w łazience",
+      "location": "Łazienka",
+      "interval": "6 miesięcy",
+      "rank": 6,
+      "lastCleaned": null
+    },
+    {
+      "id": 46,
+      "description": "mycie szafki z lustrem w środku",
+      "location": "Łazienka",
+      "interval": "2 miesiące",
+      "rank": 4,
+      "lastCleaned": null
+    },
+    {
+      "id": 47,
+      "description": "Mycie półki nad kiblem",
+      "location": "Łazienka",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 48,
+      "description": "Mycie pojemnika na płyny w pralce",
+      "location": "Łazienka",
+      "interval": "3 miesiące",
+      "rank": 5,
+      "lastCleaned": null
+    },
+    {
+      "id": 49,
+      "description": "Mycie półek przy prysznnicu w odkamieniaczu",
+      "location": "Łazienka",
+      "interval": "2 miesiące",
+      "rank": 4,
+      "lastCleaned": null
+    },
+    {
+      "id": 50,
+      "description": "Mycie kubła na śmieci",
+      "location": "Łazienka",
+      "interval": "2 tygodnie",
+      "rank": 2,
+      "lastCleaned": null
+    },
+    {
+      "id": 51,
+      "description": "Mycie naściennych paneli nad blatami",
+      "location": "Kuchnia",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 52,
+      "description": "Mycie zlewozmywaka",
+      "location": "Kuchnia",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 53,
+      "description": "Odkamienienie baterii i końcówki kranu",
+      "location": "Kuchnia",
+      "interval": "2 tygodnie",
+      "rank": 2,
+      "lastCleaned": null
+    },
+    {
+      "id": 54,
+      "description": "Wyczyszczenie hokerow",
+      "location": "Kuchnia",
+      "interval": "1 tydzień",
+      "rank": 1,
+      "lastCleaned": null
+    },
+    {
+      "id": 55,
+      "description": "Mycie frontów kuchennych",
+      "location": "Kuchnia",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 56,
+      "description": "Lodówkę umyć wszystkie półki",
+      "location": "Kuchnia",
+      "interval": "6 miesięcy",
+      "rank": 6,
+      "lastCleaned": null
+    },
+    {
+      "id": 57,
+      "description": "Zamrażalkę umyć",
+      "location": "Kuchnia",
+      "interval": "6 miesięcy",
+      "rank": 6,
+      "lastCleaned": null
+    },
+    {
+      "id": 58,
+      "description": "Płyta kuchenna",
+      "location": "Kuchnia",
+      "interval": "1 miesiąc",
+      "rank": 3,
+      "lastCleaned": null
+    },
+    {
+      "id": 59,
+      "description": "Piekarnik",
+      "location": "Kuchnia",
+      "interval": "6 miesięcy",
+      "rank": 6,
+      "lastCleaned": null
+    },
+    {
+      "id": 60,
+      "description": "Zmywarka - program czyszczący",
+      "location": "Kuchnia",
+      "interval": "2 miesiące",
+      "rank": 4,
       "lastCleaned": null
     }
   ],
-  "nextId": 3
+  "nextId": 61
 }
