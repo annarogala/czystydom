@@ -35,6 +35,7 @@ export class App implements OnInit {
 
   // Sorting
   sortBy = signal<SortBy>('time');
+  selectedLocationFilters = signal<Location[]>([]);
 
   // // Available options
   locations: Location[] = [
@@ -48,9 +49,13 @@ export class App implements OnInit {
   ];
   intervals: Interval[] = ['1 tydzień', '2 tygodnie', '1 miesiąc', '3 miesiące', '6 miesięcy'];
 
-  // Sorted todos
+  // Filtered and sorted todos
   sortedTodos = computed(() => {
-    const items = [...this.todos()];
+    const filters = this.selectedLocationFilters();
+    const items =
+      filters.length === 0
+        ? [...this.todos()]
+        : this.todos().filter((todo) => filters.includes(todo.location));
     const sortType = this.sortBy();
 
     switch (sortType) {
@@ -117,6 +122,24 @@ export class App implements OnInit {
 
   setSortBy(sort: SortBy) {
     this.sortBy.set(sort);
+  }
+
+  toggleLocationFilter(location: Location, enabled: boolean) {
+    this.selectedLocationFilters.update((filters) => {
+      if (enabled) {
+        return filters.includes(location) ? filters : [...filters, location];
+      }
+
+      return filters.filter((filter) => filter !== location);
+    });
+  }
+
+  clearLocationFilters() {
+    this.selectedLocationFilters.set([]);
+  }
+
+  isLocationFilterSelected(location: Location): boolean {
+    return this.selectedLocationFilters().includes(location);
   }
 
   hardResetTodos() {

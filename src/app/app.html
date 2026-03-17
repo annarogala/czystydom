@@ -73,6 +73,31 @@
         🏠 Pomieszczenia
       </button>
     </div>
+
+    <div class="filter-controls">
+      <div class="filter-header">
+        <label>Filtruj po pomieszczeniu:</label>
+        <button
+          type="button"
+          class="btn btn-filter-reset"
+          [class.active]="selectedLocationFilters().length === 0"
+          (click)="clearLocationFilters()"
+        >
+          Wszystkie
+        </button>
+      </div>
+
+      <div class="filter-options">
+        <label class="filter-option" *ngFor="let location of locations">
+          <input
+            type="checkbox"
+            [checked]="isLocationFilterSelected(location)"
+            (change)="toggleLocationFilter(location, $any($event.target).checked)"
+          />
+          <span>{{ location }}</span>
+        </label>
+      </div>
+    </div>
   </section>
 
   <!-- Todo list -->
